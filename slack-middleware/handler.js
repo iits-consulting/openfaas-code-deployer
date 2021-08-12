@@ -19,7 +19,7 @@ const languages = {
 }
 
 module.exports = async (event, context) => {
-  let input
+  const input = event.body.text
   let message
 
   try {
