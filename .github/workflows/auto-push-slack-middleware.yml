@@ -10,9 +10,20 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - run: |
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_DEPLOY_TOKEN }}
+      - name: Build and Push Slack Middleware Docker Image
+        run: |
           curl -sSL https://cli.openfaas.com | sh
           faas-cli build -f slack-middleware.yml
-          docker tag slack-middleware iits/${{env.DOCKER_NAME}}:${{github.sha}}
-          docker push iits/${{env.DOCKER_NAME}}:${{github.sha}}
+          faas-cli push -f slack-middleware.yml
+          faas-cli deploy --image iits/${{env.DOCKER_NAME}}:${{github.sha}} --name slack-middleware
+      - name: Deploy
+        run: |
+          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
           faas-cli deploy --image iits/${{env.DOCKER_NAME}}:${{github.sha}} --name slack-middleware

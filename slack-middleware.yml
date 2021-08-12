@@ -6,4 +6,4 @@ functions:
   slack-middleware:
     lang: node12
     handler: ./slack-middleware
-    image: slack-middleware:latest
+    image: iits/dfd-slack-middleware:latest
