@@ -28,4 +28,4 @@ jobs:
         with:
           context: docker/Dockerfile
           push: true
-          tags: iits/${DOCKER_NAME}:${GITHUB_SHA}
+          tags: iits/${env.DOCKER_NAME}:${GITHUB_SHA}
