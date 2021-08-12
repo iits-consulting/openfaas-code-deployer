@@ -21,7 +21,7 @@ jobs:
         run: |
           curl -sSL https://cli.openfaas.com | sh
           echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
-          faas-cli build -f slack-middleware.yml --build-arg OPENFAAS_ADMIN_PASSWORD=${{ secrets.OPENFAAS_ADMIN_PASSWORD }}
+          faas-cli build -f slack-middleware.yml
           faas-cli push -f slack-middleware.yml
           faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name slack-middleware
       - name: Deploy
