@@ -1,10 +1,9 @@
 version: 1.0
 provider:
   name: openfaas
-  gateway: http://127.0.0.1:8080
+  gateway: https://dfd-openfaas.iits.tech
 functions:
   slack-middleware:
     lang: node12
     handler: ./slack-middleware
     image: slack-middleware:latest
-
