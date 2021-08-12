@@ -5,7 +5,7 @@ const axios = require('axios')
 
 const config = {
   faas: {
-    baseUrl: 'http://gateway.openfaas:8080'
+    baseUrl: 'http://gateway.openfaas-fn:8080'
   }
 }
 
