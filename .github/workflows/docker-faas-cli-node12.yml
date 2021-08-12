@@ -1,4 +1,4 @@
-ker-faas-cli-node12
+name: docker-faas-cli-node12
 env:
   DOCKER_NAME: docker-faas-cli-node12
 on:
