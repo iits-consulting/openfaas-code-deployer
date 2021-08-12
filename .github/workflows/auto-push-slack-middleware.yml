@@ -1,0 +1,18 @@
+name: dfd-slack-middleware-auto-deploy
+env:
+  DOCKER_NAME: dfd-slack-middleware
+  OPENFAAS_URL: https://dfd-openfaas.iits.tech
+on:
+  - pull_request
+  - push
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -sSL https://cli.openfaas.com | sh
+          faas-cli build -f slack-middleware.yml
+          docker tag slack-middleware iits/${{env.DOCKER_NAME}}:${{github.sha}}
+          docker push iits/${{env.DOCKER_NAME}}:${{github.sha}}
+          faas-cli deploy --image iits/${{env.DOCKER_NAME}}:${{github.sha}} --name slack-middleware

@@ -5,7 +5,7 @@ faas-cli new --lang dockerfile faas-deployer
 ```
 - Create a PAT https://github.com/settings/tokens/new?scopes=write:packages
 ```bash
-export FAAS_API=http://20.52.205.67:8080
+export FAAS_API=https://dfd-openfaas.iits.tech
 export CR_PAT=<>
 export USERNAME=rowi1de
 echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
