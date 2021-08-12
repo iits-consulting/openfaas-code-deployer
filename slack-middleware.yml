@@ -1,9 +1,0 @@
-version: 1.0
-provider:
-  name: openfaas
-  gateway: https://dfd-openfaas.iits.tech
-functions:
-  slack-middleware:
-    lang: node12
-    handler: ./slack-middleware
-    image: iits/dfd-slack-middleware:latest

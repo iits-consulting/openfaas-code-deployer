@@ -1,0 +1,23 @@
+name: dfd-auto-deploy
+env:
+  OPENFAAS_URL: https://dfd-openfaas.iits.tech
+on:
+  - pull_request
+  - push
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_DEPLOY_TOKEN }}
+      - name: Build and Deploy All Functions
+        run: |
+          curl -sSL https://cli.openfaas.com | sh
+          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
+          faas-cli up --parallel 10
