@@ -78,11 +78,11 @@ const determineFunctionName = (input) => {
 }
 
 const determinePayload = (input) => {
-  const parts = input.split(' ').shift().shift()
+  const parts = input.split(' ')
+  parts.shift()
+  parts.shift()
   return parts.join(' ')
 }
 
-const deploy = (language, code) => {
-}
-const run = (functionName, args) => {
-}
+const deploy = (language, code) => {}
+const run = (functionName, args) => {}
