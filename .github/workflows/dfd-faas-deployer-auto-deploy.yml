@@ -2,7 +2,6 @@ name: dfd-faas-deployer-auto-deploy
 env:
   DOCKER_NAME: dfd-faas-deployer
   OPENFAAS_URL: https://dfd-openfaas.iits.tech
-  FAAS_GATEWAY: http://20.52.205.67:8080/
 on:
   - pull_request
   - push
@@ -21,13 +20,13 @@ jobs:
       - name: Build and Push Deployer Docker Image
         run: |
           curl -sSL https://cli.openfaas.com | sh
-          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
+          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin -g ${{env.OPENFAAS_URL}} --password-stdin
           cd deployer
           faas-cli build -f faas-deployer.yml --build-arg OPENFAAS_ADMIN_PASSWORD=${{ secrets.OPENFAAS_ADMIN_PASSWORD }}
           faas-cli push -f faas-deployer.yml
-          faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name faas-deployer
+          faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name faas-deployer -g ${{env.OPENFAAS_URL}}
       - name: Deploy
         run: |
-          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
+          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin -g ${{env.OPENFAAS_URL}} --password-stdin
           cd deployer
-          faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name faas-deployer
+          faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name faas-deployer -g ${{env.OPENFAAS_URL}}
