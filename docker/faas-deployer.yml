@@ -6,7 +6,7 @@ functions:
   faas-deployer:
     lang: dockerfile
     handler: ./faas-deployer
-    image:  ghcr.io/iits-consulting/faas-deployer:latest
+    image:  ghcr.io/iits-consulting/openfaas-code-deployer/faas-deployer:latest
     secrets:
       - ghcr-token
 
