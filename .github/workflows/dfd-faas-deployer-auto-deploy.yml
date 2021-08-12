@@ -21,10 +21,12 @@ jobs:
         run: |
           curl -sSL https://cli.openfaas.com | sh
           echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
-          faas-cli build -f deployer/faas-deployer.yml
-          faas-cli push -f deployer/faas-deployer.yml
+          cd deployer
+          faas-cli build -f faas-deployer.yml
+          faas-cli push -f faas-deployer.yml
           faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name faas-deployer
       - name: Deploy
         run: |
           echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
+          cd deployer
           faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name faas-deployer
