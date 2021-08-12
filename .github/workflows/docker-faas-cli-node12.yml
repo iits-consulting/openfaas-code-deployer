@@ -24,5 +24,4 @@ jobs:
         with:
           context: docker1
           push: true
-          #tags: iits/${{env.DOCKER_NAME}}:${{github.sha}}
-          tags:  ${{ steps.meta.outputs.tags }}
+          tags: iits/${{env.DOCKER_NAME}}:latest
