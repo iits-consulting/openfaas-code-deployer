@@ -26,6 +26,5 @@ jobs:
           faas-cli deploy --image iits/${{env.DOCKER_NAME}}:${{github.sha}} --name slack-middleware
       - name: Deploy
         run: |
-          curl -sSL https://cli.openfaas.com | sh
           echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
           faas-cli deploy --image iits/${{env.DOCKER_NAME}}:${{github.sha}} --name slack-middleware
