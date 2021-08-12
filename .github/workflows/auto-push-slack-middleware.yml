@@ -7,7 +7,7 @@ on:
   - push
 
 jobs:
-  docker:
+  push-slack-middleware:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
