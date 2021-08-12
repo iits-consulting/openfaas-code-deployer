@@ -32,7 +32,7 @@ module.exports = async (event, context) => {
       const functionName = determineFunctionName(input)
       const payload = determinePayload(input)
       message = `running ${functionName} with payload ${payload} :partyparrot:`
-      const {data} = await axios.post(`${config.faas.baseUrl}/function/`, payload)
+      const {data} = await axios.post(`${config.faas.baseUrl}/function/${functionName}`, payload)
 
       message += "\n" + JSON.stringify(data)
 
