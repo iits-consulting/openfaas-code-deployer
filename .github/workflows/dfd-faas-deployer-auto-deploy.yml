@@ -1,0 +1,30 @@
+name: dfd-faas-deployer-auto-deploy
+env:
+  DOCKER_NAME: dfd-faas-deployer
+  OPENFAAS_URL: https://dfd-openfaas.iits.tech
+on:
+  - pull_request
+  - push
+
+jobs:
+  push-faas-deployer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_DEPLOY_TOKEN }}
+      - name: Build and Push Slack Middleware Docker Image
+        run: |
+          curl -sSL https://cli.openfaas.com | sh
+          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
+          faas-cli build -f deployer/faas-deployer.yml
+          faas-cli push -f deployer/faas-deployer.yml
+          faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name faas-deployer
+      - name: Deploy
+        run: |
+          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
+          faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name faas-deployer
