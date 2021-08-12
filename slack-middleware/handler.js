@@ -31,10 +31,14 @@ module.exports = async (event, context) => {
     } else if (command === commands.RUN) {
       const functionName = determineFunctionName(input)
       const payload = determinePayload(input)
-      message = `running ${functionName} with payload ${payload} :partyparrot:`
-      const {data} = await axios.post(`${config.faas.baseUrl}/function/${functionName}`, payload)
 
-      message += "\n" + JSON.stringify(data)
+
+
+
+      message = `running ${functionName} with payload ${payload} :partyparrot:`
+      axios.post(`${config.faas.baseUrl}/function/${functionName}`, payload)
+
+      // message += "\n" + JSON.stringify(data)
 
     } else {
       message = `unknown command ${command}`
@@ -74,7 +78,8 @@ const determineFunctionName = (input) => {
 }
 
 const determinePayload = (input) => {
-  return input.split(' ')[2]
+  const parts = input.split(' ').shift().shift()
+  return parts.join(' ')
 }
 
 const deploy = (language, code) => {
