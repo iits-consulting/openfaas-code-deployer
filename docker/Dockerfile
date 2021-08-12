@@ -1,6 +1,6 @@
 FROM openfaas/faas-cli
 ENV OPENFAAS_API=https://dfd-openfaas.iits.tech
 ARG LANGUAGE=node12
-RUN echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
+RUN echo $OPENFAAS_ADMIN_PASSWORD | faas-cli login -u admin --password-stdin
 RUN faas-cli new --lang $LANGUAGE javascript-fn
 
