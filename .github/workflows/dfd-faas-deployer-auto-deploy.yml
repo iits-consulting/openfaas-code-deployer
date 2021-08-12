@@ -24,7 +24,6 @@ jobs:
           echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin -g ${{env.OPENFAAS_URL}} --password-stdin
           faas-cli build -f faas-deployer.yml --build-arg OPENFAAS_ADMIN_PASSWORD=${{ secrets.OPENFAAS_ADMIN_PASSWORD }}
           faas-cli push -f faas-deployer.yml
-          faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name faas-deployer
       - name: Deploy
         run: |
           cd deployer
