@@ -21,13 +21,13 @@ jobs:
       - name: Build and Push Deployer Docker Image
         run: |
           curl -sSL https://cli.openfaas.com | sh
-          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin -g ${{env.FAAS_GATEWAY}}
+          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin -g ${{env.FAAS_GATEWAY}} --password-stdin
           cd deployer
           faas-cli build -f faas-deployer.yml --build-arg OPENFAAS_ADMIN_PASSWORD=${{ secrets.OPENFAAS_ADMIN_PASSWORD }}
           faas-cli push -f faas-deployer.yml
           faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name faas-deployer
       - name: Deploy
         run: |
-          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin -g -g ${{env.FAAS_GATEWAY}}
+          echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin -g ${{env.FAAS_GATEWAY}} --password-stdin
           cd deployer
           faas-cli deploy --image iits/${{env.DOCKER_NAME}}:latest --name faas-deployer
