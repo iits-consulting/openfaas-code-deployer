@@ -22,6 +22,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: docker/Dockerfile
+          context: docker1
           push: true
-          tags: iits/${{env.DOCKER_NAME}}:${{github.sha}}
+          #tags: iits/${{env.DOCKER_NAME}}:${{github.sha}}
+          tags:  ${{ steps.meta.outputs.tags }}
