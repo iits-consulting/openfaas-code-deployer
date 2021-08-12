@@ -28,3 +28,5 @@ jobs:
           file: ./docker/Dockerfile
           push: true
           tags: iits/${{env.DOCKER_NAME}}:latest
+          build-args: |
+            OPENFAAS_ADMIN_PASSWORD=${{ secrets.OPENFAAS_ADMIN_PASSWORD }}
