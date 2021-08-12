@@ -5,7 +5,7 @@ const axios = require('axios')
 
 const config = {
   faas: {
-    baseUrl: 'https://dfd-openfaas.iits.tech'
+    baseUrl: 'http://gateway.openfaas:8080'
   }
 }
 
