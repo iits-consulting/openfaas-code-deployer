@@ -17,7 +17,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_DEPLOY_TOKEN }}
-      - name: Build and Push Slack Middleware Docker Image
+      - name: Build and Push Deployer Docker Image
         run: |
           curl -sSL https://cli.openfaas.com | sh
           echo ${{ secrets.OPENFAAS_ADMIN_PASSWORD }} | faas-cli login -u admin --password-stdin
